@@ -1,0 +1,9 @@
+# requirements.txt
+# Core Libraries
+numpy<2
+pandas
+
+# Database & Redshift Connection
+psycopg2-binary
+boto3
+python-dotenv
