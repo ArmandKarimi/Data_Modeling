@@ -1,0 +1,19 @@
+.
+├── Carbon_Emissions
+├── Countries_Economy
+│   ├── data
+│   │   ├── cities.csv
+│   │   ├── countries.csv
+│   │   ├── currencies.csv
+│   │   ├── economies.csv
+│   │   ├── languages.csv
+│   │   └── populations.csv
+│   ├── data_ingestion
+│   │   ├── __init__.py
+│   │   └── create_tables.py
+│   └── notebooks
+│       └── test.ipynb
+├── project_structure.txt
+└── requirements.txt
+
+6 directories, 11 files
