@@ -1,0 +1,110 @@
+### 1. 🔍 Countries and Languages — Basic Join
+
+```sql
+SELECT country_name, l.name
+FROM countries c
+JOIN languages l ON c.code = l.code
+LIMIT 10;
+```
+
+---
+
+### 2. 📊 Number of Languages Spoken per Country
+
+```sql
+SELECT country_name, COUNT(*) AS num_lang
+FROM countries c
+JOIN languages l ON c.code = l.code
+GROUP BY country_name
+ORDER BY num_lang DESC
+LIMIT 10;
+```
+
+---
+
+### 3. 📈 Fertility & Unemployment Rate by Country/Year
+
+```sql
+SELECT country_name,
+       e.year,
+       p.fertility_rate,
+       e.unemployment_rate
+FROM countries c
+JOIN population p ON p.country_code = c.code
+JOIN economies e ON e.code = c.code
+WHERE p.year = e.year
+ORDER BY country_name, year DESC
+LIMIT 10;
+```
+
+---
+
+### 4. 🏙️ Cities and Country Info (INNER JOIN vs LEFT JOIN)
+
+```sql
+-- INNER JOIN
+SELECT c.name,
+       c2.country_name,
+       c2.region,
+       city_proper_pop,
+       metroarea_pop
+FROM cities c
+INNER JOIN countries c2 ON c.country_code = c2.code
+LIMIT 10;
+
+-- LEFT JOIN
+SELECT c.name,
+       c2.country_name,
+       c2.region,
+       city_proper_pop,
+       metroarea_pop
+FROM cities c
+LEFT JOIN countries c2 ON c.country_code = c2.code
+LIMIT 10;
+```
+
+---
+
+### 5. 🌍 Average GDP Per Capita by Region (2010)
+
+```sql
+SELECT AVG(e.gdp_percapita), c.region
+FROM economies e
+JOIN countries c USING (code)
+GROUP BY c.region, e.year
+HAVING e.year = 2010;
+```
+
+---
+
+### 6. 🧍‍♂️👬 Population Growth from 2010 to 2015
+
+```sql
+SELECT c.country_name,
+       p1.size AS size2010,
+       p2.size AS size2015
+FROM population p1
+JOIN population p2 USING (country_code)
+JOIN countries c ON p1.country_code = c.code
+WHERE p1.year = 2010
+  AND p2.year = 2015;
+```
+
+---
+
+### 7. ➕ UNION — Combine Results from Two Queries
+
+```sql
+SELECT * 
+FROM languages
+WHERE code = 'AFG'
+
+UNION
+
+SELECT * 
+FROM languages
+WHERE code = 'USA'
+
+ORDER BY code;
+```
+
