@@ -108,3 +108,82 @@ WHERE code = 'USA'
 ORDER BY code;
 ```
 
+---
+
+### 8. 🤝 Semi Join — Languages Spoken in the Middle East
+
+```sql
+SELECT l.name
+FROM languages l
+WHERE l.code IN (
+  SELECT code
+  FROM countries
+  WHERE region = 'Middle East'
+);
+```
+
+---
+
+### 9. 📊 Subquery in WHERE — Above-Average Fertility
+
+```sql
+SELECT *
+FROM population p
+WHERE year = 2015
+  AND life_expectancy > 1.15 * (
+    SELECT AVG(life_expectancy)
+    FROM population p2
+    WHERE year = 2010
+);
+```
+
+---
+
+### 10. 🏙️ Capital Cities Ordered by Urban Population Size
+
+```sql
+SELECT name, country_code, urbanarea_pop
+FROM cities
+WHERE name IN (
+  SELECT capital
+  FROM countries
+);
+```
+
+---
+
+### 11. 📈 Top Countries by City Count (Using Subquery)
+
+```sql
+SELECT country_code, COUNT(name) AS num_cities
+FROM cities
+GROUP BY country_code
+ORDER BY num_cities DESC
+LIMIT 9;
+```
+
+---
+
+### 12. 🗣️ Number of Languages Per Country (JOIN)
+
+```sql
+SELECT c.local_name, COUNT(l.name)
+FROM languages l
+JOIN countries c ON l.code = c.code
+GROUP BY c.local_name
+LIMIT 10;
+```
+
+---
+
+### 13. 🧠 Subquery in FROM — Languages per Country
+
+```sql
+SELECT local_name, num_langs
+FROM (
+  SELECT c.local_name, COUNT(l.name) AS num_langs
+  FROM countries c
+  JOIN languages l ON c.code = l.code
+  GROUP BY c.local_name
+) AS sub;
+```
